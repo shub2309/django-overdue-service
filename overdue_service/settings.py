@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--@q#nmk@-^hlts!924^)^j5=51lpb+z1t^e=unw_m-%3#(tg-$'
+SECRET_KEY = 'django-insecure-p&d+5q5d(brh^4nj&f!b94fi1dpd^5!q0^%yw#u1!p$=1xs&j='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'overdue_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'task_manager',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 

@@ -1,17 +1,21 @@
-from rest_framework import viewsets, mixins
-from rest_framework.permissions import IsAuthenticated
-from .models import Task
-from .serializers import TaskSerializer, TaskUpdateSerializer
+from datetime import datetime
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-class TaskViewSet(mixins.RetrieveModelMixin, 
-                  mixins.UpdateModelMixin, 
-                  mixins.ListModelMixin, 
-                  viewsets.GenericViewSet):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
+@api_view(['POST'])
+def check_overdue(request):
+    tasks = request.data.get('tasks', [])
+    overdue_ids = []
 
-    def get_serializer_class(self):
-        if self.action in ['update', 'partial_update']:
-            return TaskUpdateSerializer
-        return TaskSerializer
+    today = datetime.utcnow().date()
+
+    for task in tasks:
+        due_date = datetime.fromisoformat(task['due_date']).date()
+        status = task['status']
+
+        if due_date < today and status != 'DONE':
+            overdue_ids.append(task['id'])
+
+    return Response({
+        "overdue_task_ids": overdue_ids
+    })

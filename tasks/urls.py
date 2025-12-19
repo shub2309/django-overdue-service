@@ -1,10 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import TaskViewSet
-
-router = DefaultRouter()
-router.register(r'tasks', TaskViewSet)
+from django.urls import path
+from .views import check_overdue
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('check-overdue/', check_overdue),
 ]
